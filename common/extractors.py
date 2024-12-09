@@ -4,11 +4,19 @@ from common.classes import Function
 from common.llms import invoke_llm
 
 
-def extract_tasks(user_message: str) -> list[str]:
+def extract_tasks(user_message: str, functions: list[Function]) -> list[str]:
+    functions_list: str = ""
+    for function in functions:
+        functions_list += f"{function.__str__()}\n"
+
     selection: dict = invoke_llm(
         message=f"""Divide up the user's queries into smaller tasks if it requires more than one step to achieve its goal.
 If the user's query does not need further dividing, simply return it as is in the list.
 If a task relies on a previous tasks's result, use the value '%%' instead.
+
+The tasks can only be performed with the following functions:
+
+{functions_list}
 
 Question:
 {user_message}

@@ -16,6 +16,12 @@ class Function(ABC, BaseModel):
             "output": output
         })
 
+    def __str__(self):
+        return f"""{self.__class__.__name__}
+- Name: {self.name}
+- Description: {self.description}
+- Output: {self.output}"""
+
     @abstractmethod
     def do(self, **kwargs) -> Any:
         raise NotImplementedError

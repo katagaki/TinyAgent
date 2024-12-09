@@ -5,11 +5,7 @@ from common.llms import invoke_llm
 def select_function(user_message: str, functions: list[Function]) -> Function | None:
     functions_list: str = ""
     for function in functions:
-        functions_list += f"""{function.__class__.__name__}
-- Name: {function.name}
-- Description: {function.description}
-- Output: {function.output}
-"""
+        functions_list += f"{function.__str__()}\n"
 
     selection: dict = invoke_llm(
         message=f"""Given a function list, determine which function should be performed from the user's query.
